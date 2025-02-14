@@ -1,0 +1,36 @@
+# apiVersion: karpenter.k8s.aws/v1alpha1
+# kind: AWSNodeTemplate
+# metadata:
+#   name: api-node-template
+# spec:
+#   amiFamily: Bottlerocket # Use AL2023 if needed
+#   subnetSelector:
+#     karpenter.sh/discovery: "demo"
+#   securityGroupSelector:
+#     Name: "eks-cluster-sg-demo-3079651"
+#   instanceProfile: "KarpenterInstanceProfile-demo"
+#   tags:
+#     karpenter.sh/discovery: "demo"
+#     Name: "api-node"
+#   userData: |
+#     #!/bin/bash
+#     echo "Custom userdata script"
+#   blockDeviceMappings:
+#     - deviceName: /dev/xvda
+#       ebs:
+#         volumeSize: 20Gi
+#         volumeType: gp3
+#         encrypted: true
+#   metadataOptions:
+#     httpPutResponseHopLimit: 2
+#     httpTokens: "required"
+
+#   requirements:
+#     - key: "node.kubernetes.io/instance-type"
+#       operator: In
+#       values: ["m5.large"]
+#     - key: "karpenter.k8s.aws/capacity-type"
+#       operator: In
+#       values: ["on-demand"]
+
+

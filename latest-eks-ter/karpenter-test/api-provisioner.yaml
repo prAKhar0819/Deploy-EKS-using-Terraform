@@ -1,0 +1,39 @@
+# apiVersion: karpenter.sh/v1alpha5
+# kind: Provisioner
+# metadata:
+#   name: api-provisioner
+# spec:
+#   providerRef:
+#     name: api-node-template
+#   requirements:
+#     - key: "node.kubernetes.io/instance-type"
+#       operator: In
+#       values: ["m5.large", "m5.xlarge"]
+#   limits:
+#     resources:
+#       cpu: "1000"
+#   ttlSecondsAfterEmpty: 30
+
+
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: api-provisioner
+spec:
+  requirements:
+    - key: "node.kubernetes.io/instance-type"
+      operator: In
+      values: ["m5.large", "m5.xlarge"]
+  limits:
+    resources:
+      cpu: "1000"  # Limits total provisioned CPU across nodes
+  provider:
+    subnetSelector:
+      karpenter.sh/discovery: "demo"
+    securityGroupSelector:
+      Name: "eks-cluster-sg-demo-3079651"
+    instanceProfile: "KarpenterInstanceProfile-demo"
+    tags:
+      karpenter.sh/discovery: "demo"
+  consolidation:
+    enabled: true  # Automatically remove unused nodes to save costs
