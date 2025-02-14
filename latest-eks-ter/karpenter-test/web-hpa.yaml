@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: api-hpa
-  namespace: api
+  name: web-hpa
+  namespace: website
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: api-deployment  # Change this as per your deployment
+    name: web-deployment  # Change this as per your deployment
   minReplicas: 2
   maxReplicas: 30
   metrics:

@@ -1,33 +1,17 @@
-# apiVersion: karpenter.sh/v1alpha5
-# kind: Provisioner
-# metadata:
-#   name: api-provisioner
-# spec:
-#   providerRef:
-#     name: api-node-template
-#   requirements:
-#     - key: "node.kubernetes.io/instance-type"
-#       operator: In
-#       values: ["m5.large", "m5.xlarge"]
-#   limits:
-#     resources:
-#       cpu: "1000"
-#   ttlSecondsAfterEmpty: 30
-
 
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: api-provisioner
+  name: website-provisioner
 spec:
   requirements:
     - key: "node.kubernetes.io/instance-type"
       operator: In
-      values: ["t2.medium", "t3.medium"]
-    
+      values: ["m5.large"]
+  
   limits:
     resources:
-      cpu: "50"  # Limits total provisioned CPU across nodes
+      cpu: "100"  # Limits total provisioned CPU across nodes
   provider:
     subnetSelector:
       karpenter.sh/discovery: "demo"
